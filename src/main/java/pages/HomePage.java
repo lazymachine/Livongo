@@ -1,19 +1,23 @@
 package main.java.pages;
 
 import main.java.BasePage;
+
+import main.java.utils.JavaScriptUtils;
+import main.java.utils.WebElementUtils;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import test.java.utils.PropertyFileUtils;
+import main.java.utils.PropertyFileUtils;
+import org.openqa.selenium.support.PageFactory;
 
 public class HomePage extends BasePage {
 
     /**
      * Class Constructor.
      */
-    public HomePage(WebDriver driver) {
-        super(driver);
+    public HomePage() {
+        super();
+        PageFactory.initElements(driver, this);
         open();
     }
 
@@ -30,24 +34,26 @@ public class HomePage extends BasePage {
      */
     public void open() {
         driver.navigate().to(URL);
-        utils.log("navigate to url: " + URL);
-        waitForPageLoad();
+        log("navigate to url: " + URL);
+        JavaScriptUtils.waitForPageLoad();
 
     }
 
     /**
-     * Clicks on Hotel Citywide Tab.
+     * Clicks on clickOnGetStarted.
      *
-     * @return HotelCityWide Page Object
+     * @return SignUpPage Object
      */
     public SignUpPage clickOnGetStarted() {
         try {
-            joinNowBtn.click();
-            utils.log("get started button clicked");
+            WebElementUtils.click(joinNowBtn);
+            log("get started button clicked");
         } catch (NoSuchElementException e) {
-            utils.logError(e.toString());
+            logError(e, "failed on method "
+                    + this.getClass().getSimpleName()
+                    + ":" + getMethodName() + "\n");
         }
-        return new SignUpPage(driver);
+        return new SignUpPage();
     }
 
 

@@ -1,10 +1,13 @@
 package main.java.pages;
 
 import main.java.BasePage;
+import main.java.utils.BrowserUtils;
+import main.java.utils.WebElementUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
 public class SignUpPage extends BasePage {
@@ -12,14 +15,12 @@ public class SignUpPage extends BasePage {
     /**
      * Class Constructor.
      */
-    public SignUpPage(WebDriver driver) {
-        super(driver);
-        waitForPageLoad();
-        Assert.assertTrue(verifyPage("SignUpPage", pageverificationtxt));
-        utils.log("landed on signup page");
+    public SignUpPage() {
+        super();
+        PageFactory.initElements(driver, this);
+        log("landed on signup page");
     }
 
-    private final String PAGE_VERIFICATION_TEXT = ".//*[contains(text(),'Create your account.')]";
     private final String FIRST_NAME_ID = "get-started-input-firstname";
     private final String LAST_NAME_ID = "get-started-input-lastname";
     private final String DOB_MONTH_ID = "get-started-input-month";
@@ -27,11 +28,9 @@ public class SignUpPage extends BasePage {
     private final String DOB_YEAR_ID = "get-started-input-year";
     private final String EMAIL_ID = "get-started-input-email";
     private final String PASSWORD_ID = "get-started-input-password";
-    private final String TERMS_ID = "get-started-terms-and-conditions";
+    private final String TERMS_XPATH = ".//*[@class='lv-checkbox']";
     private final String SUBMIT_XPATH = ".//*[@class='step-button']/button";
 
-    @FindBy(xpath = PAGE_VERIFICATION_TEXT)
-    protected WebElement pageverificationtxt;
 
     @FindBy(id = FIRST_NAME_ID)
     protected WebElement firstNameInput;
@@ -54,7 +53,7 @@ public class SignUpPage extends BasePage {
     @FindBy(id = PASSWORD_ID)
     protected WebElement passoword_input;
 
-    @FindBy(id = TERMS_ID)
+    @FindBy(xpath = TERMS_XPATH)
     protected WebElement terms_checkbox;
 
     @FindBy(xpath = SUBMIT_XPATH)
@@ -62,33 +61,33 @@ public class SignUpPage extends BasePage {
 
     /**
      * enters first name.
-     *
-     * @param firstName name to be entered
      */
-    public SignUpPage enterFirstName(String firstName) {
+    public SignUpPage enterFirstName() {
         try {
-            firstNameInput.clear();
-            firstNameInput.sendKeys(firstName);
-            utils.log("first name entered: " + firstName);
+            String firstName = testdataInput.get("firstname");
+            WebElementUtils.fill(firstNameInput, firstName);
+            log("first name entered: " + firstName);
         } catch (NoSuchElementException e) {
-            utils.logError(e.toString());
+            logError(e, "Error at method - "
+                    + this.getClass().getSimpleName() + ":enterFirstName");
         }
         return this;
     }
 
     /**
      * enters last name.
-     *
-     * @param lastName name to be entered
      */
-    public SignUpPage enterLastName(String lastName) {
+    public SignUpPage enterLastName() {
 
         try {
-            lastNameInput.clear();
-            lastNameInput.sendKeys(lastName);
-            utils.log("last entered: " + lastName);
+            String lastName = testdataInput.get("lastname");
+
+            WebElementUtils.fill(lastNameInput, lastName);
+
+            log("last entered: " + lastName);
         } catch (NoSuchElementException e) {
-            utils.logError(e.toString());
+            logError(e, "Error at method - "
+                    + this.getClass().getSimpleName() + ":enterLastName");
         }
         return this;
     }
@@ -96,25 +95,26 @@ public class SignUpPage extends BasePage {
 
     /**
      * enters last name.
-     *
-     * @param dob name to be entered
      */
-    public SignUpPage enterDob(String dob) {
-        String dobArr[] = dob.split("-");
+    public SignUpPage enterDob() {
 
         try {
-            dob_month_input.clear();
-            dob_month_input.sendKeys(dobArr[0]);
+            String dob = testdataInput.get("dob");
 
-            dob_day_input.clear();
-            dob_day_input.sendKeys(dobArr[0]);
+            String dobArr[] = dob.split("-");
 
-            dob_year_input.clear();
-            dob_year_input.sendKeys(dobArr[0]);
+            WebElementUtils.fill(dob_month_input, dobArr[0]);
 
-            utils.log("dobentered: " + dob);
+            WebElementUtils.fill(dob_day_input, dobArr[1]);
+
+            WebElementUtils.fill(dob_year_input, dobArr[2]);
+
+
+            log("dobentered: " + dob);
+
         } catch (NoSuchElementException e) {
-            utils.logError(e.toString());
+            logError(e, "Error at method - "
+                    + this.getClass().getSimpleName() + ":enterDob");
         }
         return this;
     }
@@ -124,33 +124,31 @@ public class SignUpPage extends BasePage {
      * enters email.
      */
     public SignUpPage enterEmail() {
-
-        String email = utils.createUniqueEmail();
-
         try {
-            useremail_input.clear();
-            useremail_input.sendKeys(email);
-            utils.log("email entered: " + email);
+            String email = utils.createUniqueEmail();
+            WebElementUtils.fill(useremail_input, email);
+            log("email entered: " + email);
         } catch (NoSuchElementException e) {
-            utils.logError(e.toString());
+            logError(e, "Error at method - "
+                    + this.getClass().getSimpleName() + ":enterDob");
         }
         return this;
     }
 
 
     /**
-     * enters email.
-     *
-     * @param password name to be entered
+     * enters password.
      */
-    public SignUpPage enterPassword(String password) {
+    public SignUpPage enterPassword() {
 
         try {
-            passoword_input.clear();
-            passoword_input.sendKeys(password);
-            utils.log("password entered: " + password);
+            String password = testdataInput.get("password");
+            WebElementUtils.fill(passoword_input, password);
+            log("password entered: " + password);
         } catch (NoSuchElementException e) {
-            utils.logError(e.toString());
+            logError(e, "Error at method - "
+                    + this.getClass().getSimpleName() + ":enterPassword");
+
         }
         return this;
     }
@@ -162,10 +160,11 @@ public class SignUpPage extends BasePage {
     public SignUpPage clickTermsCheckbox() {
 
         try {
-            terms_checkbox.click();
-            utils.log("terms and condition checkbox clicked");
+            WebElementUtils.click(terms_checkbox);
+            log("terms and condition checkbox clicked");
         } catch (NoSuchElementException e) {
-            utils.logError(e.toString());
+            logError(e, "Error at method - "
+                    + this.getClass().getSimpleName() + ":clickTermsCheckbox");
         }
         return this;
     }
@@ -178,13 +177,13 @@ public class SignUpPage extends BasePage {
      */
     public SuppliesPage clickSubmitBtn() {
         try {
-            waitForPageLoad();
-            submit_btn.click();
-            utils.log("submit btn clicked from signup page");
+            WebElementUtils.click(submit_btn);
+            log("submit btn clicked from signup page");
         } catch (NoSuchElementException e) {
-            utils.logError(e.toString());
+            logError(e, "Error at method - "
+                    + this.getClass().getSimpleName() + ":clickSubmitBtn");
         }
-        return new SuppliesPage(driver);
+        return new SuppliesPage();
     }
 
 

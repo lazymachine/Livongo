@@ -1,7 +1,9 @@
-# Dockerized Web Automation
-Web Automation Framework using Docker, Java, TestNG, Selenium Webdriver Grid, Shell Script
+# Web Automation
+Web Automation Framework using Java, TestNG, Selenium Webdriver
 
 *Note: Tested only on Mac Device*
+
+*Path to test: src/test/java/smokeTests/CoveragePageTest*
 
 #### Steps to run the tests
    
@@ -53,40 +55,11 @@ Web Automation Framework using Docker, Java, TestNG, Selenium Webdriver Grid, Sh
             $ mvn clean install test -DsuiteXmlFile=livongo-sample-testsuite.xml
 
    
-   5. Once Test Run finishes successfully, HTML report should open automatically. 
-        Or else:
-        -   go to project folder and under it look for results-XXXX folder
-        -   right click and open emailable-reports.html
-        -   and all the screenshots are found under screenshots folder
+   5. To see the test results:
+        -  go to project folder and under it look for target folder
+        -  then under target folder find surefire-reports folder
+        -  right click and open emailable-reports.html
+
    
-   6.  Screen-captured [demo video](https://youtu.be/ztDWifaInCI)of the project running on a Mac Device
+   6.  Screen-captured [demo video](https://youtu.be/ztDWifaInCI) of the project running on a Mac Device
                           
-
-#### Features of the framework
-    1. Runs completely with just shell script and Docker
-    2. Can be integrated with CI/CD tools like Jenkins
-    3. Uses Selenium Grid, tests can be run on parallel; Scalable
-    4. Generates HTML report with logs and Screenshot embedded
-    5. parametrized test input
-    6. Implements PageObject Model for scripting tests for code reuse and DRY
-
-
-#### Test Requirements
-Test Page : https://www.clicktripz.com/test.php
-
-##### Test Steps:
-
-###### For Hotel Citywide:
-    1. Open a new Chrome browser window and navigate to the Test Page.
-    2. Change the location in the City field.
-    3. Change the date in the Check-in field to next week’s Friday date.
-    4. Change the date in the Check-out field to next week’s Sunday date.
-    5. Change the number in the Guests drop-down to 2.
-    6. Keep the Rooms drop-down set to 1.
-    7. Select the Search Hotels button.
-    8. Minimize the main browser window.
-    9. Change focus to the Exit Unit window. (capture a screenshot)
-    10. Select the ‘Show me the first deal!’ button on the welcome modal to dismiss it and expand the window. (capture a screenshot)
-    11. Click through each tab. (capturing screenshots of each tab after they load)
-    12. Capture the Exit Unit URL.
-    13. Close both browser windows.

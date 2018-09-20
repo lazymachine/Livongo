@@ -1,4 +1,4 @@
-package test.java.utils;
+package main.java.utils;
 
 import org.testng.Reporter;
 
@@ -18,24 +18,6 @@ public class PropertyFileUtils {
 
         String filePath = System.getProperty("user.dir")
                 + File.separator + "config.properties";
-
-        return loadPropertiesHelper(filePath);
-    }
-
-    /**
-     * Loads the config properties file.
-     *
-     * @return returns the config file
-     */
-    public static Properties getTestData(String testDataFileName) {
-
-        String filePath = System.getProperty("user.dir")
-                + File.separator + "src"
-                + File.separator + "test"
-                + File.separator + "java"
-                + File.separator + "_resources"
-                + File.separator + "testdata"
-                + File.separator + "testDataFileName";
 
         return loadPropertiesHelper(filePath);
     }
