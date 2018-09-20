@@ -61,5 +61,5 @@ Web Automation Framework using Java, TestNG, Selenium Webdriver
         -  right click and open emailable-reports.html
 
    
-   6.  Screen-captured [demo video](https://youtu.be/ztDWifaInCI) of the project running on a Mac Device
+   6.  Screen-captured [demo video](https://youtu.be/j2-pvFAVOHE) of the project running on a Mac Device
                           
